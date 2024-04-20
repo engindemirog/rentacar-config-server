@@ -12,7 +12,7 @@ eureka:
 
 spring:
   application:
-    name: gateway-service
+    name: gatewayService
   cloud:
     gateway:
       mvc:
