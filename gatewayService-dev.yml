@@ -1,0 +1,28 @@
+server:
+  port: 9002
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka
+  instance:
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}
+    preferIpAddress: true
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      mvc:
+        routes[0]:
+          id: inventoryservice
+          predicates[0]: Path=/inventoryservice/api/v1/brands/**
+          uri: lb://INVENTORY-SERVICE
+        routes[1]:
+          id: discoveryserver
+          predicates[0]: Path=/eureka/web
+          filters[0]: SetPath=/
+          uri: http://localhost:9000
+          
